@@ -1,0 +1,86 @@
+{
+ "protocol": "冻结 chinese-roberta-wwm-ext mean-pooling(768d) + StandardScaler + LR；ChatGPT-only(800) 训练；目标批 Bootstrap 重采样到 n 后独立执行单步 EM 校正；5-fold×5seeds；macro-F1",
+ "model": "hfl/chinese-roberta-wwm-ext (frozen)",
+ "max_len": 256,
+ "sizes": [
+  50,
+  100,
+  200,
+  500,
+  1000,
+  2000
+ ],
+ "targets": [
+  "deepseek",
+  "glm"
+ ],
+ "feature_sets": {
+  "roberta_frozen": {
+   "deepseek": {
+    "n_50": {
+     "F1_none": 0.8798,
+     "F1_em": 0.9397,
+     "gain": 0.06
+    },
+    "n_100": {
+     "F1_none": 0.8883,
+     "F1_em": 0.9465,
+     "gain": 0.0582
+    },
+    "n_200": {
+     "F1_none": 0.8878,
+     "F1_em": 0.9583,
+     "gain": 0.0705
+    },
+    "n_500": {
+     "F1_none": 0.8921,
+     "F1_em": 0.9559,
+     "gain": 0.0638
+    },
+    "n_1000": {
+     "F1_none": 0.889,
+     "F1_em": 0.9546,
+     "gain": 0.0656
+    },
+    "n_2000": {
+     "F1_none": 0.8851,
+     "F1_em": 0.9569,
+     "gain": 0.0718
+    }
+   },
+   "glm": {
+    "n_50": {
+     "F1_none": 0.8605,
+     "F1_em": 0.9398,
+     "gain": 0.0793
+    },
+    "n_100": {
+     "F1_none": 0.877,
+     "F1_em": 0.9554,
+     "gain": 0.0784
+    },
+    "n_200": {
+     "F1_none": 0.8707,
+     "F1_em": 0.9621,
+     "gain": 0.0914
+    },
+    "n_500": {
+     "F1_none": 0.8703,
+     "F1_em": 0.9566,
+     "gain": 0.0863
+    },
+    "n_1000": {
+     "F1_none": 0.8657,
+     "F1_em": 0.9564,
+     "gain": 0.0907
+    },
+    "n_2000": {
+     "F1_none": 0.8662,
+     "F1_em": 0.9556,
+     "gain": 0.0894
+    }
+   }
+  }
+ },
+ "runtime_sec": 1935.6
+}

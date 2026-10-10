@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Large artefacts: fetch or regenerate locally
+models/
+*.npz
+*.pt
+*.pth
+*.joblib
+figs/
+
+# Corpus (licensing / size): see README "Data"
+data/
+
+# Local snapshots produced by E10
+dist/

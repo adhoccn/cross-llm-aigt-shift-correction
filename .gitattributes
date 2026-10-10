@@ -1,0 +1,9 @@
+# Normalise line endings: LF in the repository, native in the working copy.
+* text=auto eol=lf
+
+*.py   text
+*.md   text
+*.json text
+*.yaml text
+*.txt  text
+*.sh   text eol=lf

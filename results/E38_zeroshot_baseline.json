@@ -1,0 +1,204 @@
+{
+ "protocol": "零样本基线对比。替代模型：因果 qwen2.5-0.5b，掩码 无。目标域每类取 40 条（与本文方法同一批样本）。PPL/PLL/zlib 完全不训练；GLTR 与本文方法同样只使用 ChatGPT 源域（800 组配对）训练。文本截断到前 64 个词元（无 GPU，CPU 前向约 16 词元/秒，长度是唯一可控的开销）。阈值一律在源域留出集上按 macro-F1 选定，AUC 为阈值无关主指标。",
+ "n_per_class": 40,
+ "causal_model": "qwen2.5-0.5b",
+ "mlm_model": null,
+ "max_len": 64,
+ "targets": {
+  "deepseek": {
+   "n": 80,
+   "ppl": {
+    "AUC": 0.8575,
+    "F1_src_thr": 0.6953,
+    "F1_oracle_thr": 0.7679
+   },
+   "ppl_zlib": {
+    "AUC": 0.895,
+    "F1_src_thr": 0.6577,
+    "F1_oracle_thr": 0.8749
+   },
+   "gltr": {
+    "AUC": 0.8481,
+    "F1_src_thr": 0.707,
+    "F1_oracle_thr": 0.7775
+   },
+   "ours_15D_none": {
+    "AUC": 0.97,
+    "F1_src_thr": 0.821,
+    "F1_oracle_thr": 0.925
+   },
+   "ours_15D_tta": {
+    "AUC": 0.97,
+    "F1_src_thr": 0.8999,
+    "F1_oracle_thr": 0.925
+   },
+   "ours_char_2_4_none": {
+    "AUC": 0.9912,
+    "F1_src_thr": 0.8057,
+    "F1_oracle_thr": 0.9625
+   },
+   "ours_char_2_4_tta": {
+    "AUC": 0.9912,
+    "F1_src_thr": 0.8861,
+    "F1_oracle_thr": 0.9625
+   }
+  },
+  "glm": {
+   "n": 80,
+   "ppl": {
+    "AUC": 0.8662,
+    "F1_src_thr": 0.68,
+    "F1_oracle_thr": 0.8111
+   },
+   "ppl_zlib": {
+    "AUC": 0.8944,
+    "F1_src_thr": 0.6577,
+    "F1_oracle_thr": 0.8873
+   },
+   "gltr": {
+    "AUC": 0.8612,
+    "F1_src_thr": 0.679,
+    "F1_oracle_thr": 0.8122
+   },
+   "ours_15D_none": {
+    "AUC": 0.9387,
+    "F1_src_thr": 0.8344,
+    "F1_oracle_thr": 0.8614
+   },
+   "ours_15D_tta": {
+    "AUC": 0.9387,
+    "F1_src_thr": 0.8246,
+    "F1_oracle_thr": 0.8614
+   },
+   "ours_char_2_4_none": {
+    "AUC": 0.9856,
+    "F1_src_thr": 0.7917,
+    "F1_oracle_thr": 0.95
+   },
+   "ours_char_2_4_tta": {
+    "AUC": 0.9856,
+    "F1_src_thr": 0.8994,
+    "F1_oracle_thr": 0.95
+   }
+  },
+  "qwen": {
+   "n": 80,
+   "ppl": {
+    "AUC": 0.8531,
+    "F1_src_thr": 0.6321,
+    "F1_oracle_thr": 0.8222
+   },
+   "ppl_zlib": {
+    "AUC": 0.9537,
+    "F1_src_thr": 0.925,
+    "F1_oracle_thr": 0.925
+   },
+   "gltr": {
+    "AUC": 0.8312,
+    "F1_src_thr": 0.6502,
+    "F1_oracle_thr": 0.7875
+   },
+   "ours_15D_none": {
+    "AUC": 0.9763,
+    "F1_src_thr": 0.9248,
+    "F1_oracle_thr": 0.9374
+   },
+   "ours_15D_tta": {
+    "AUC": 0.9763,
+    "F1_src_thr": 0.9374,
+    "F1_oracle_thr": 0.9374
+   },
+   "ours_char_2_4_none": {
+    "AUC": 0.995,
+    "F1_src_thr": 0.9499,
+    "F1_oracle_thr": 0.9875
+   },
+   "ours_char_2_4_tta": {
+    "AUC": 0.995,
+    "F1_src_thr": 0.9374,
+    "F1_oracle_thr": 0.9875
+   }
+  },
+  "gpt-4o": {
+   "n": 80,
+   "ppl": {
+    "AUC": 0.9694,
+    "F1_src_thr": 0.8997,
+    "F1_oracle_thr": 0.925
+   },
+   "ppl_zlib": {
+    "AUC": 0.9925,
+    "F1_src_thr": 0.9374,
+    "F1_oracle_thr": 0.9625
+   },
+   "gltr": {
+    "AUC": 0.9656,
+    "F1_src_thr": 0.8873,
+    "F1_oracle_thr": 0.9
+   },
+   "ours_15D_none": {
+    "AUC": 0.9988,
+    "F1_src_thr": 0.9875,
+    "F1_oracle_thr": 0.9875
+   },
+   "ours_15D_tta": {
+    "AUC": 0.9988,
+    "F1_src_thr": 0.9875,
+    "F1_oracle_thr": 0.9875
+   },
+   "ours_char_2_4_none": {
+    "AUC": 1.0,
+    "F1_src_thr": 1.0,
+    "F1_oracle_thr": 1.0
+   },
+   "ours_char_2_4_tta": {
+    "AUC": 1.0,
+    "F1_src_thr": 1.0,
+    "F1_oracle_thr": 1.0
+   }
+  },
+  "llama3": {
+   "n": 80,
+   "ppl": {
+    "AUC": 0.9569,
+    "F1_src_thr": 0.8354,
+    "F1_oracle_thr": 0.8994
+   },
+   "ppl_zlib": {
+    "AUC": 0.9506,
+    "F1_src_thr": 0.8369,
+    "F1_oracle_thr": 0.9246
+   },
+   "gltr": {
+    "AUC": 0.955,
+    "F1_src_thr": 0.8873,
+    "F1_oracle_thr": 0.8999
+   },
+   "ours_15D_none": {
+    "AUC": 0.9869,
+    "F1_src_thr": 0.9625,
+    "F1_oracle_thr": 0.9625
+   },
+   "ours_15D_tta": {
+    "AUC": 0.9869,
+    "F1_src_thr": 0.9625,
+    "F1_oracle_thr": 0.9625
+   },
+   "ours_char_2_4_none": {
+    "AUC": 0.9994,
+    "F1_src_thr": 0.9499,
+    "F1_oracle_thr": 0.9875
+   },
+   "ours_char_2_4_tta": {
+    "AUC": 0.9994,
+    "F1_src_thr": 0.975,
+    "F1_oracle_thr": 0.9875
+   }
+  }
+ },
+ "source_thresholds": {
+  "ppl": -2.923425598144531,
+  "ppl_zlib": -0.006053629957349604
+ },
+ "runtime_sec": 1803.4
+}

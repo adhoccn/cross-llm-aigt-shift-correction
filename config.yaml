@@ -1,0 +1,53 @@
+# Multi-LLM corpus collection config — fill in and run `gen_data.py`.
+# All endpoints are OpenAI-compatible /chat/completions; gateways work too.
+# API keys are read from environment variables; never write them here.
+#
+# Model versions recorded in the paper (Section 3.2):
+#   chatgpt  gpt-3.5-turbo-0125    deepseek  deepseek-v3
+#   qwen     qwen-max-latest       glm       glm-4-air
+#   gpt-4o   gpt-4o-2024-08-06     llama3    llama-3.1-8b
+#
+# Suggested scale (Section 3.1): 400 test items per target LLM,
+# plus the mixed training pool; paraphrased corpora go to data/para_<name>.jsonl.
+llms:
+  deepseek:
+    base_url: "https://api.deepseek.com"
+    api_key: "${DEEPSEEK_API_KEY}"
+    model: "deepseek-chat"
+    temperature: 0.7
+    max_tokens: 1024
+  qwen:
+    base_url: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    api_key: "${QWEN_API_KEY}"
+    model: "qwen-plus"
+    temperature: 0.7
+    max_tokens: 1024
+  ernie:
+    base_url: "https://qianfan.baidubce.com/v2"
+    api_key: "${ERNIE_API_KEY}"
+    model: "ernie-4.0-8k"
+    temperature: 0.7
+    max_tokens: 1024
+  llama:
+    base_url: "https://openrouter.ai/api/v1"
+    api_key: "${OPENROUTER_API_KEY}"
+    model: "meta-llama/llama-3.3-70b-instruct"
+    temperature: 0.7
+    max_tokens: 1024
+  gemini:
+    base_url: "https://openrouter.ai/api/v1"
+    api_key: "${OPENROUTER_API_KEY}"
+    model: "google/gemini-2.0-flash-001"
+    temperature: 0.7
+    max_tokens: 1024
+  kimi:
+    base_url: "https://api.moonshot.cn/v1"
+    api_key: "${KIMI_API_KEY}"
+    model: "moonshot-v1-8k"
+    temperature: 0.7
+    max_tokens: 1024
+
+# 采集规模建议（对齐论文 §3.1：每 LLM 400 条测试 + 训练混合量）
+#   E1/E5 需要 ≥1600 条/LLM（保证 5-fold 每折有足够样本）
+#   E3   至少需要 1 个非中文系 LLM（llama 或 gemini）
+#   E8   改写语料另存为 data/para_<name>.jsonl

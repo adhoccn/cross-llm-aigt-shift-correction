@@ -1,0 +1,13 @@
+# 核心依赖（实验 E17–E34 全部需要）
+numpy==2.5.0
+scipy==1.18.0
+scikit-learn==1.9.0
+xgboost==3.3.0
+jieba==0.42.1
+statsmodels==0.15.0
+
+# 深度表征实验（E27 / E28 / E29 / E30 / E32 / E33）
+
+# 绘图与语料采集
+matplotlib==3.11.0
+PyYAML==6.0.3

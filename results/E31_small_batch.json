@@ -1,0 +1,172 @@
+{
+ "protocol": "ChatGPT-only(800) 训练；目标批 Bootstrap 重采样到 n 后独立执行 UBC；5-fold×5 seeds；macro-F1",
+ "sizes": [
+  10,
+  20,
+  30,
+  40
+ ],
+ "targets": [
+  "deepseek",
+  "glm"
+ ],
+ "feature_sets": {
+  "15D": {
+   "deepseek": {
+    "n_10": {
+     "F1_none": 0.8868,
+     "F1_em": 0.7674,
+     "gain": -0.1193,
+     "std_none": 0.0951,
+     "std_em": 0.2224,
+     "n_runs": 25,
+     "worse_rate": 0.52
+    },
+    "n_20": {
+     "F1_none": 0.8709,
+     "F1_em": 0.8008,
+     "gain": -0.0701,
+     "std_none": 0.0906,
+     "std_em": 0.1341,
+     "n_runs": 25,
+     "worse_rate": 0.68
+    },
+    "n_30": {
+     "F1_none": 0.889,
+     "F1_em": 0.8027,
+     "gain": -0.0864,
+     "std_none": 0.0607,
+     "std_em": 0.1327,
+     "n_runs": 25,
+     "worse_rate": 0.68
+    },
+    "n_40": {
+     "F1_none": 0.899,
+     "F1_em": 0.8725,
+     "gain": -0.0266,
+     "std_none": 0.0421,
+     "std_em": 0.0602,
+     "n_runs": 25,
+     "worse_rate": 0.6
+    }
+   },
+   "glm": {
+    "n_10": {
+     "F1_none": 0.7836,
+     "F1_em": 0.7473,
+     "gain": -0.0363,
+     "std_none": 0.1255,
+     "std_em": 0.2281,
+     "n_runs": 25,
+     "worse_rate": 0.36
+    },
+    "n_20": {
+     "F1_none": 0.7995,
+     "F1_em": 0.7692,
+     "gain": -0.0303,
+     "std_none": 0.0961,
+     "std_em": 0.1124,
+     "n_runs": 25,
+     "worse_rate": 0.48
+    },
+    "n_30": {
+     "F1_none": 0.8186,
+     "F1_em": 0.7818,
+     "gain": -0.0368,
+     "std_none": 0.0593,
+     "std_em": 0.1134,
+     "n_runs": 25,
+     "worse_rate": 0.56
+    },
+    "n_40": {
+     "F1_none": 0.796,
+     "F1_em": 0.8118,
+     "gain": 0.0158,
+     "std_none": 0.0626,
+     "std_em": 0.0656,
+     "n_runs": 25,
+     "worse_rate": 0.28
+    }
+   }
+  },
+  "char_2_4": {
+   "deepseek": {
+    "n_10": {
+     "F1_none": 0.754,
+     "F1_em": 0.8995,
+     "gain": 0.1455,
+     "std_none": 0.1312,
+     "std_em": 0.0914,
+     "n_runs": 25,
+     "worse_rate": 0.08
+    },
+    "n_20": {
+     "F1_none": 0.7413,
+     "F1_em": 0.8966,
+     "gain": 0.1553,
+     "std_none": 0.0945,
+     "std_em": 0.0798,
+     "n_runs": 25,
+     "worse_rate": 0.08
+    },
+    "n_30": {
+     "F1_none": 0.7134,
+     "F1_em": 0.8988,
+     "gain": 0.1854,
+     "std_none": 0.0897,
+     "std_em": 0.0553,
+     "n_runs": 25,
+     "worse_rate": 0.04
+    },
+    "n_40": {
+     "F1_none": 0.7449,
+     "F1_em": 0.8775,
+     "gain": 0.1325,
+     "std_none": 0.067,
+     "std_em": 0.0499,
+     "n_runs": 25,
+     "worse_rate": 0.12
+    }
+   },
+   "glm": {
+    "n_10": {
+     "F1_none": 0.7055,
+     "F1_em": 0.8812,
+     "gain": 0.1758,
+     "std_none": 0.1203,
+     "std_em": 0.0965,
+     "n_runs": 25,
+     "worse_rate": 0.04
+    },
+    "n_20": {
+     "F1_none": 0.7293,
+     "F1_em": 0.8928,
+     "gain": 0.1635,
+     "std_none": 0.1032,
+     "std_em": 0.0719,
+     "n_runs": 25,
+     "worse_rate": 0.04
+    },
+    "n_30": {
+     "F1_none": 0.7328,
+     "F1_em": 0.8843,
+     "gain": 0.1515,
+     "std_none": 0.0788,
+     "std_em": 0.0769,
+     "n_runs": 25,
+     "worse_rate": 0.0
+    },
+    "n_40": {
+     "F1_none": 0.7447,
+     "F1_em": 0.8631,
+     "gain": 0.1184,
+     "std_none": 0.0603,
+     "std_em": 0.0608,
+     "n_runs": 25,
+     "worse_rate": 0.08
+    }
+   }
+  }
+ },
+ "runtime_sec": 163.2
+}

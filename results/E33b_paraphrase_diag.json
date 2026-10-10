@@ -1,0 +1,238 @@
+{
+ "protocol": "机制分解：AUC 在类条件对齐前后不变（位移是后验的单调函数），故把攻击损失拆为「阈值/漂移可修部分」与「排序/信息不可修部分」。最优阈值用目标批真值标签选取，作为任意单调重标定方法的上界。",
+ "n_per": 200,
+ "conds": [
+  "orig",
+  "para_ai",
+  "para_all"
+ ],
+ "feature_sets": {
+  "15D": {
+   "Delta_src": 2.3273,
+   "sigma_src": 0.992,
+   "SNR_src": 2.346,
+   "targets": {
+    "deepseek": {
+     "orig": {
+      "F1_none": 0.8661,
+      "F1_optthr": 0.915,
+      "thr_opt": -1.1537,
+      "F1_em": 0.91,
+      "fixable": 0.0489,
+      "unfixable": 0.005,
+      "em_vs_opt": -0.005,
+      "AUC": 0.9727,
+      "xi_ai": 0.9785,
+      "xi_hu": 0.0933,
+      "Delta_T": 1.4421,
+      "sigma_T": 0.9264,
+      "SNR_T": 1.5568,
+      "pseudo_acc": 0.8675,
+      "n_texts": 400
+     },
+     "para_ai": {
+      "F1_none": 0.7661,
+      "F1_optthr": 0.8171,
+      "thr_opt": -1.7832,
+      "F1_em": 0.8146,
+      "fixable": 0.051,
+      "unfixable": 0.0025,
+      "em_vs_opt": -0.0025,
+      "AUC": 0.8867,
+      "xi_ai": 1.1726,
+      "xi_hu": 0.0933,
+      "Delta_T": 1.2481,
+      "sigma_T": 1.0581,
+      "SNR_T": 1.1796,
+      "pseudo_acc": 0.775,
+      "n_texts": 400
+     },
+     "para_all": {
+      "F1_none": 0.7473,
+      "F1_optthr": 0.7871,
+      "thr_opt": -2.542,
+      "F1_em": 0.7498,
+      "fixable": 0.0399,
+      "unfixable": 0.0373,
+      "em_vs_opt": -0.0373,
+      "AUC": 0.846,
+      "xi_ai": 1.1726,
+      "xi_hu": -0.0671,
+      "Delta_T": 1.0877,
+      "sigma_T": 1.1465,
+      "SNR_T": 0.9487,
+      "pseudo_acc": 0.755,
+      "n_texts": 400
+     }
+    },
+    "glm": {
+     "orig": {
+      "F1_none": 0.8077,
+      "F1_optthr": 0.8775,
+      "thr_opt": -1.7702,
+      "F1_em": 0.8598,
+      "fixable": 0.0698,
+      "unfixable": 0.0177,
+      "em_vs_opt": -0.0177,
+      "AUC": 0.95,
+      "xi_ai": 1.1051,
+      "xi_hu": 0.0933,
+      "Delta_T": 1.3155,
+      "sigma_T": 0.9647,
+      "SNR_T": 1.3637,
+      "pseudo_acc": 0.8125,
+      "n_texts": 400
+     },
+     "para_ai": {
+      "F1_none": 0.7074,
+      "F1_optthr": 0.8219,
+      "thr_opt": -3.0984,
+      "F1_em": 0.812,
+      "fixable": 0.1145,
+      "unfixable": 0.0099,
+      "em_vs_opt": -0.0099,
+      "AUC": 0.8956,
+      "xi_ai": 1.2154,
+      "xi_hu": 0.0933,
+      "Delta_T": 1.2052,
+      "sigma_T": 1.2295,
+      "SNR_T": 0.9802,
+      "pseudo_acc": 0.725,
+      "n_texts": 400
+     },
+     "para_all": {
+      "F1_none": 0.6893,
+      "F1_optthr": 0.7871,
+      "thr_opt": -2.522,
+      "F1_em": 0.7523,
+      "fixable": 0.0978,
+      "unfixable": 0.0348,
+      "em_vs_opt": -0.0348,
+      "AUC": 0.848,
+      "xi_ai": 1.2154,
+      "xi_hu": -0.0671,
+      "Delta_T": 1.0448,
+      "sigma_T": 1.3064,
+      "SNR_T": 0.7998,
+      "pseudo_acc": 0.705,
+      "n_texts": 400
+     }
+    }
+   }
+  },
+  "char_2_4": {
+   "Delta_src": 5.0437,
+   "sigma_src": 0.9756,
+   "SNR_src": 5.17,
+   "targets": {
+    "deepseek": {
+     "orig": {
+      "F1_none": 0.7977,
+      "F1_optthr": 0.95,
+      "thr_opt": -2.475,
+      "F1_em": 0.95,
+      "fixable": 0.1523,
+      "unfixable": 0.0,
+      "em_vs_opt": 0.0,
+      "AUC": 0.9863,
+      "xi_ai": 2.9014,
+      "xi_hu": 0.0174,
+      "Delta_T": 2.1597,
+      "sigma_T": 0.7533,
+      "SNR_T": 2.8672,
+      "pseudo_acc": 0.805,
+      "n_texts": 400
+     },
+     "para_ai": {
+      "F1_none": 0.8494,
+      "F1_optthr": 0.93,
+      "thr_opt": -1.9503,
+      "F1_em": 0.9275,
+      "fixable": 0.0805,
+      "unfixable": 0.0025,
+      "em_vs_opt": -0.0025,
+      "AUC": 0.9709,
+      "xi_ai": 2.5389,
+      "xi_hu": 0.0174,
+      "Delta_T": 2.5222,
+      "sigma_T": 0.967,
+      "SNR_T": 2.6084,
+      "pseudo_acc": 0.8525,
+      "n_texts": 400
+     },
+     "para_all": {
+      "F1_none": 0.7716,
+      "F1_optthr": 0.795,
+      "thr_opt": -0.6388,
+      "F1_em": 0.7823,
+      "fixable": 0.0234,
+      "unfixable": 0.0126,
+      "em_vs_opt": -0.0126,
+      "AUC": 0.856,
+      "xi_ai": 2.5389,
+      "xi_hu": -0.9768,
+      "Delta_T": 1.5281,
+      "sigma_T": 1.0723,
+      "SNR_T": 1.4251,
+      "pseudo_acc": 0.7725,
+      "n_texts": 400
+     }
+    },
+    "glm": {
+     "orig": {
+      "F1_none": 0.8171,
+      "F1_optthr": 0.9375,
+      "thr_opt": -2.5042,
+      "F1_em": 0.9175,
+      "fixable": 0.1204,
+      "unfixable": 0.02,
+      "em_vs_opt": -0.02,
+      "AUC": 0.9814,
+      "xi_ai": 2.7834,
+      "xi_hu": 0.0174,
+      "Delta_T": 2.2776,
+      "sigma_T": 0.8309,
+      "SNR_T": 2.7411,
+      "pseudo_acc": 0.8225,
+      "n_texts": 400
+     },
+     "para_ai": {
+      "F1_none": 0.8494,
+      "F1_optthr": 0.93,
+      "thr_opt": -2.6186,
+      "F1_em": 0.9199,
+      "fixable": 0.0806,
+      "unfixable": 0.0101,
+      "em_vs_opt": -0.0101,
+      "AUC": 0.9813,
+      "xi_ai": 2.4946,
+      "xi_hu": 0.0174,
+      "Delta_T": 2.5665,
+      "sigma_T": 0.9471,
+      "SNR_T": 2.7098,
+      "pseudo_acc": 0.8525,
+      "n_texts": 400
+     },
+     "para_all": {
+      "F1_none": 0.7716,
+      "F1_optthr": 0.7974,
+      "thr_opt": -0.3335,
+      "F1_em": 0.7899,
+      "fixable": 0.0258,
+      "unfixable": 0.0075,
+      "em_vs_opt": -0.0075,
+      "AUC": 0.864,
+      "xi_ai": 2.4946,
+      "xi_hu": -0.9768,
+      "Delta_T": 1.5723,
+      "sigma_T": 1.0544,
+      "SNR_T": 1.4912,
+      "pseudo_acc": 0.7725,
+      "n_texts": 400
+     }
+    }
+   }
+  }
+ },
+ "runtime_sec": 24.3
+}

@@ -1,0 +1,5 @@
+# Optional: deep-representation experiments (E27/E28/E29/E30/E32/E33/E38).
+# All other experiments run without these.
+# CPU build — install from https://pytorch.org/get-started/locally/
+# torch==2.14.1+cpu
+transformers==5.18.0
