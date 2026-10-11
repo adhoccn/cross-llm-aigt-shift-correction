@@ -136,28 +136,30 @@ required; leave `manuscript.md` out of version control if you keep it here.
 
 | Script | What it establishes | Tables |
 |---|---|---|
-| E17 | 15-D vs TF-IDF baselines under one protocol | 13 |
-| E18 | Same-protocol in-domain reference | 2, 13 |
-| E19 | $\Xi_{\mathrm{eff}}$ definition, analytic F1 prediction, granularity law, Corollary 3 | 2–7 |
-| E20 | CLIDA, per-dimension modulation, $S_E$/$S_B$ overlap | S8–S10 |
-| E26 | Batch vs class-conditional alignment, gain vs initial drift, stacking with mixing | 11–14 |
-| E27 | Frozen RoBERTa representations | 11 |
-| E28 | Correction strength $\lambda$ | 17 |
-| E29 | E-step variants (trim / conf / oracle) | 9, 15 |
-| E30 | One-factor vs two-factor error model; label-free variant selection | 8, 10 |
-| E31 / E32 | Batch-size sensitivity (15-D / char / RoBERTa) | 18 |
+| E17 | 15-D vs TF-IDF baselines under one protocol | 7 |
+| E18 | Same-protocol in-domain reference | 2, 7 |
+| E19 | $\Xi_{\mathrm{eff}}$ definition, analytic F1 prediction, granularity law, Corollary 3 | 2–4, S12–S14 |
+| E20 | CLIDA, per-dimension modulation, $S_E$/$S_B$ overlap | S8–S10; full section in supplementary §D (Figs. S1–S2) |
+| E26 | Batch vs class-conditional alignment, gain vs initial drift, stacking with mixing | 6–7, S15, S17–S18 |
+| E27 | Frozen RoBERTa representations | 6 |
+| E28 | Correction strength $\lambda$ | S21 |
+| E29 | E-step variants (trim / conf / oracle) | S15, S19 |
+| E30 | One-factor vs two-factor error model; label-free variant selection | 5, S16 |
+| E31 / E32 | Batch-size sensitivity (15-D / char / RoBERTa) | S22 |
 | E33 / E33b | Real paraphrase attack; repairable vs unrepairable loss | S3 |
 | E34 | Training-set size sensitivity | §3.3 |
 | E35 | Batch class-prior imbalance $\pi$ | S1, S2 |
 | E36 | Fixed-FPR operating points, FPR@$z$=0, ECE, Spearman $\rho$ | S4–S6 |
-| E37 | Target-domain supervised ceiling and recovery rate | 16 |
+| E37 | Target-domain supervised ceiling and recovery rate | S20 |
 | E38 | Zero-shot detector family (PPL / PPL÷zlib / GLTR) under the same protocol | S7 |
 | E39 | Class-prior $\pi$ estimators and the pre-correction rejection rule | S11 |
 | E10 | Environment, seed and hyper-parameter snapshot | reproducibility |
 
-Tables 1–18 are in the main text; tables S1–S11 are in the supplementary material. Files in
-`tables/` keep the numbering of the earlier single-file draft, so table 19–28 there correspond
-to supplementary S1–S10 (`table_S11.md` is S11).
+Tables 1–7 are in the main text (8 figures); tables S1–S22 and figures S1–S2 are in the
+supplementary material. Files in `tables/` keep the numbering of the earlier single-file draft:
+table 19–28 there correspond to supplementary S1–S10 (`table_S11.md` is S11), and the tables
+moved out of the main text keep their old numbers too (3/6/7/9/10/12/14–18 = supplementary
+S12–S22).
 
 ## Notes and known constraints
 

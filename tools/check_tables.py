@@ -62,7 +62,14 @@ def parse_md_tables(md_path):
     return {k: v[1:] for k, v in out.items() if len(v) > 1}
 
 
-SKIP_LAST = {'12': 1}   # 表 12 末列是文字（代表场景），不参与数值比对
+SKIP_LAST = {'S17': 1}  # 分档表末列是文字（代表场景），不参与数值比对
+
+# v2.81 起正文只留 7 张主结果表，其余迁入补充材料。
+# 稿件表号 -> tools/make_tables.py 中的生成键
+MAIN_MAP = {1: 1, 2: 2, 3: 4, 4: 5, 5: 8, 6: 11, 7: 13}
+# 由正文迁入补充材料的表：补充标号 -> 生成键
+MOVED_TO_SUPP = {'S12': 3, 'S13': 6, 'S14': 7, 'S15': 9, 'S16': 10,
+                 'S17': 12, 'S18': 14, 'S19': 15, 'S20': 16, 'S21': 17, 'S22': 18}
 
 
 def compare(md_rows, gen_rows, tol, skip_last=0):
@@ -116,28 +123,31 @@ def main():
              '',
              '差异即"稿件数字 → 复现数字"的替换清单。', '']
     total_diff = 0
-    order = sorted([k for k in gen if k.isdigit()], key=int)
-    for k in order:
-        if k not in md:
-            lines.append('## 表 %s：稿件中未找到，跳过' % k)
+    for k in sorted(MAIN_MAP):
+        ks, gk = str(k), str(MAIN_MAP[k])
+        if ks not in md:
+            lines.append('## 表 %s：稿件中未找到，跳过' % ks)
             continue
-        d = compare(md[k], gen[k].rows, args.tol, SKIP_LAST.get(k, 0))
-        head = '## 表 %s：%s' % (k, '一致' if not d else '存在 %d 处差异' % len(d))
+        if gk not in gen:
+            lines.append('## 表 %s：无自动复现脚本，跳过' % ks)
+            continue
+        d = compare(md[ks], gen[gk].rows, args.tol, SKIP_LAST.get(ks, 0))
+        head = '## 表 %s：%s' % (ks, '一致' if not d else '存在 %d 处差异' % len(d))
         lines.append(head)
         if d:
             total_diff += len(d)
             lines.append('| 行 | 列 | 稿件值 | 复现值 | 差 |')
             lines.append('|---|---|---|---|---|')
             for i, j, x, y in d[:40]:
-                label = md[k][i][0] if i < len(md[k]) else ''
+                label = md[ks][i][0] if i < len(md[ks]) else ''
                 if isinstance(x, str) or isinstance(y, str):
                     lines.append('| %s | - | %s | %s | - |' % (label, x, y))
                 else:
                     lines.append('| %s | %d | %.4g | %.4g | %+.4g |' % (label, j, x, y, y - x))
-        if args.fix_hint and (k, 'em') in variants:
+        if args.fix_hint and (gk, 'em') in variants:
             scores = {}
             for mode in ('em', 'auto', 'oracle'):
-                dd = compare(md[k], variants[(k, mode)].rows, args.tol, SKIP_LAST.get(k, 0))
+                dd = compare(md[ks], variants[(gk, mode)].rows, args.tol, SKIP_LAST.get(ks, 0))
                 scores[mode] = len(dd)
             best = min(scores, key=lambda m: scores[m])
             lines.append('')
@@ -159,13 +169,19 @@ def main():
                 pairs.append(('S%d' % (int(k) - 18), k))
             elif not k.isdigit():
                 pairs.append((k, k))
+        for tag, gk in MOVED_TO_SUPP.items():
+            pairs.append((tag, str(gk)))
         for tag, gk in sorted(pairs, key=lambda x: int(x[0][1:])):
             k = tag
             if k not in smd:
                 lines.append('')
                 lines.append('## 表 %s：补充材料中未找到' % k)
                 continue
-            d = compare(smd[k], gen[gk].rows, args.tol)
+            if gk not in gen:
+                lines.append('')
+                lines.append('## 表 %s：无自动复现脚本，跳过' % k)
+                continue
+            d = compare(smd[k], gen[gk].rows, args.tol, SKIP_LAST.get(k, 0))
             lines.append('')
             lines.append('## 表 %s：%s' % (k, '一致' if not d else '存在 %d 处差异' % len(d)))
             if d:
@@ -182,10 +198,11 @@ def main():
         lines.extend(['', '## 替换清单在稿件中的出现位置', ''])
         raw = io.open(args.md, encoding='utf-8').read().split('\n')
         seen = set()
-        for k in sorted([k for k in gen if k.isdigit()], key=int):
-            if k not in md:
+        for k in sorted(MAIN_MAP):
+            ks, gk = str(k), str(MAIN_MAP[k])
+            if ks not in md or gk not in gen:
                 continue
-            for i, j, x, y in compare(md[k], gen[k].rows, args.tol, SKIP_LAST.get(k, 0)):
+            for i, j, x, y in compare(md[ks], gen[gk].rows, args.tol, SKIP_LAST.get(ks, 0)):
                 if isinstance(x, str):
                     continue
                 key = (k, i, j)
