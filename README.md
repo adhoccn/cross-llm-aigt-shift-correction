@@ -8,6 +8,10 @@ Reproduction code for the paper *"面向未知大语言模型的中文 AI 生成
 and Unsupervised Batch Correction*). Author identity is withheld in this repository for
 double-blind review. A Chinese version of this document is in `README_CN.md`.
 
+**Live demo of the deployed service (TTAScope):** <http://106.54.192.87:8501/tta/> — submit a
+batch of Chinese text to see per-item verdicts and the drift diagnostic. No data is retained
+server-side.
+
 ## What the paper claims, in one page
 
 A detector trained on one source LLM (ChatGPT) degrades badly on text from an unseen LLM.
