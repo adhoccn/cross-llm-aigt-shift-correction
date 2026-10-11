@@ -32,10 +32,11 @@ Two properties are worth checking first if you only read one table:
   Spearman $\rho = 1.000$ and $\Delta\mathrm{AUC} \le 0.0005$ on all 10 configurations.
   The gain is entirely at the decision threshold, not in ranking quality. This is a
   *characterisation*, not a defect — it is why the method is judged at fixed $z=0$ and why
-  fixed-FPR deployments gain nothing (Tables 22–24).
+  fixed-FPR deployments gain nothing (Tables S4–S6).
 - It **fails detectably**: when the batch class prior $\pi \to 1$ (all-AI batch), the class
   balance prior does *not* trigger and correction actively hurts (macro-F1 $-0.107$).
-  See `E35_prior_scan.py` and Tables 19–20.
+  See `E35_prior_scan.py` and Tables S1–S2; the usable guard is a pre-correction
+  rejection rule ($r_{AI}>0.64$): `E39_pi_estimator.py`, Table S11.
 
 ## Repository layout
 
@@ -138,20 +139,25 @@ required; leave `manuscript.md` out of version control if you keep it here.
 | E17 | 15-D vs TF-IDF baselines under one protocol | 13 |
 | E18 | Same-protocol in-domain reference | 2, 13 |
 | E19 | $\Xi_{\mathrm{eff}}$ definition, analytic F1 prediction, granularity law, Corollary 3 | 2–7 |
-| E20 | CLIDA, per-dimension modulation, $S_E$/$S_B$ overlap | 26–28 |
+| E20 | CLIDA, per-dimension modulation, $S_E$/$S_B$ overlap | S8–S10 |
 | E26 | Batch vs class-conditional alignment, gain vs initial drift, stacking with mixing | 11–14 |
 | E27 | Frozen RoBERTa representations | 11 |
 | E28 | Correction strength $\lambda$ | 17 |
 | E29 | E-step variants (trim / conf / oracle) | 9, 15 |
 | E30 | One-factor vs two-factor error model; label-free variant selection | 8, 10 |
 | E31 / E32 | Batch-size sensitivity (15-D / char / RoBERTa) | 18 |
-| E33 / E33b | Real paraphrase attack; repairable vs unrepairable loss | 21 |
+| E33 / E33b | Real paraphrase attack; repairable vs unrepairable loss | S3 |
 | E34 | Training-set size sensitivity | §3.3 |
-| E35 | Batch class-prior imbalance $\pi$ | 19–20 |
-| E36 | Fixed-FPR operating points, FPR@$z$=0, ECE, Spearman $\rho$ | 22–24 |
+| E35 | Batch class-prior imbalance $\pi$ | S1, S2 |
+| E36 | Fixed-FPR operating points, FPR@$z$=0, ECE, Spearman $\rho$ | S4–S6 |
 | E37 | Target-domain supervised ceiling and recovery rate | 16 |
-| E38 | Zero-shot detector family (PPL / PPL÷zlib / GLTR) under the same protocol | 25 |
+| E38 | Zero-shot detector family (PPL / PPL÷zlib / GLTR) under the same protocol | S7 |
+| E39 | Class-prior $\pi$ estimators and the pre-correction rejection rule | S11 |
 | E10 | Environment, seed and hyper-parameter snapshot | reproducibility |
+
+Tables 1–18 are in the main text; tables S1–S11 are in the supplementary material. Files in
+`tables/` keep the numbering of the earlier single-file draft, so table 19–28 there correspond
+to supplementary S1–S10 (`table_S11.md` is S11).
 
 ## Notes and known constraints
 
