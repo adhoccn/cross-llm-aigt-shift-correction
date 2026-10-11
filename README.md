@@ -155,7 +155,7 @@ required; leave `manuscript.md` out of version control if you keep it here.
 | E39 | Class-prior $\pi$ estimators and the pre-correction rejection rule | S11 |
 | E10 | Environment, seed and hyper-parameter snapshot | reproducibility |
 
-Tables 1–7 are in the main text (8 figures); tables S1–S22 and figures S1–S2 are in the
+Tables 1–7 are in the main text (5 figures); tables S1–S22 and figures S1–S2 are in the
 supplementary material. Files in `tables/` keep the numbering of the earlier single-file draft:
 table 19–28 there correspond to supplementary S1–S10 (`table_S11.md` is S11), and the tables
 moved out of the main text keep their old numbers too (3/6/7/9/10/12/14–18 = supplementary
