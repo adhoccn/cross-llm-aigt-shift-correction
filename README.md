@@ -1,5 +1,8 @@
 # Cross-LLM Chinese AIGT Detection: Discriminative Shift and Unsupervised Batch Correction
 
+> **Reproduction code for cross-LLM Chinese AI-generated-text detection: predictable
+> discriminative shift and unsupervised batch correction.**
+
 Reproduction code for the paper *"面向未知大语言模型的中文 AI 生成文本检测：判别漂移的可预测性与无标签批校正"*
 (*Detecting Chinese AI-Generated Text from Unknown LLMs: Predictability of Discriminative Shift
 and Unsupervised Batch Correction*). Author identity is withheld in this repository for

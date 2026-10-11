@@ -686,8 +686,75 @@ def t25():
     return tb
 
 
+def _ols(xs, ys):
+    """一元最小二乘，返回 (slope, intercept, r2)。"""
+    n = len(xs)
+    mx = sum(xs) / n
+    my = sum(ys) / n
+    sxx = sum((x - mx) ** 2 for x in xs)
+    sxy = sum((x - mx) * (y - my) for x, y in zip(xs, ys))
+    slope = sxy / sxx if sxx else 0.0
+    inter = my - slope * mx
+    syy = sum((y - my) ** 2 for y in ys)
+    r2 = (sxy ** 2 / (sxx * syy)) if (sxx and syy) else 0.0
+    return slope, inter, r2
+
+
+# ── 表 S11：类先验 π 的无标签可观测量（补充材料）────────────────
+def tS11():
+    """E39：批次类先验能否在校正之前被判定。
+
+    核心关系是在固定阈值下判为 AI 的样本比例对 π 仿射：
+    $r_{AI}=\\mathrm{FPR}+\\pi(\\mathrm{TPR}-\\mathrm{FPR})$，斜率恒小于 1，
+    因此观测量对 0.5 的偏离系统性小于真值。表中给出斜率的实测值、三种估计量的
+    平均绝对误差，以及「$r_{AI}>0.64$ 即拒绝校正」这条规则在危险区与可用区的触发率。
+    """
+    e39 = J('E39_pi_estimator')
+    pis = e39['pis']
+    tb = Table('S11', '类先验 π 的无标签可观测量：仿射律、估计误差与前置拒绝规则')
+    tb.header = ['特征集 / 目标', '敏感斜率 $\\kappa$', '截距',
+                 '$r_{AI}$ @ $\\pi{=}1$', 'MAE 硬判', 'MAE GMM 权重',
+                 'MAE 仿射反解', '危险区触发', '可用区误触发']
+    agg = {k: [] for k in ('pi_hat_hard', 'pi_hat_gmm', 'pi_hat_inv')}
+    fire_d, fire_u = [], []
+    for fs in ['15D', 'char_2_4']:
+        for t in ['deepseek', 'glm', 'qwen', 'gpt-4o', 'llama3']:
+            node = e39['feature_sets'][fs][t]
+            truth = [node['pi_%g' % p]['pi_true'] for p in pis]
+            hard = [node['pi_%g' % p]['pi_hat_hard'] for p in pis]
+            slope, inter, _r2 = _ols(truth, hard)
+            mae = {}
+            for k in agg:
+                vals = [node['pi_%g' % p][k] for p in pis]
+                mae[k] = sum(abs(a - b) for a, b in zip(vals, truth)) / len(vals)
+                agg[k].append(mae[k])
+            rh = [r for r in node['reject_hard'] if abs(r['cut'] - 0.64) < 1e-9][0]
+            fire_d.append(rh['fire_danger']); fire_u.append(rh['fire_usable'])
+            tb.rows.append(['%s / %s' % (FS_LABEL.get(fs, fs), t),
+                            '%.3f' % slope, '%.3f' % inter,
+                            '%.3f' % hard[-1],
+                            '%.3f' % mae['pi_hat_hard'], '%.3f' % mae['pi_hat_gmm'],
+                            '%.3f' % mae['pi_hat_inv'],
+                            '%.2f' % rh['fire_danger'], '%.2f' % rh['fire_usable']])
+    mean = lambda xs: sum(xs) / len(xs)
+    tb.rows.append(['**均值（10 组）**', '—', '—', '—',
+                    '**%.3f**' % mean(agg['pi_hat_hard']),
+                    '**%.3f**' % mean(agg['pi_hat_gmm']),
+                    '**%.3f**' % mean(agg['pi_hat_inv']),
+                    '**%.2f**' % mean(fire_d), '**%.2f**' % mean(fire_u)])
+    tb.note = ('$\\kappa$ 为 $r_{AI}$ 对真值 $\\pi$ 的最小二乘斜率，理论值等于 '
+               '$\\mathrm{TPR}-\\mathrm{FPR}$，恒小于 1（观测量向截距收缩）；'
+               '十组的拟合优度 $R^2\\ge0.996$。三种估计量均不使用目标域标签：'
+               '硬判为判作 AI 的样本比例，GMM 权重为 UBC 内部两分量拟合的高分量权重，'
+               '仿射反解为用该拟合的两类错误率反解 $(r_{AI}-\\widehat{\\mathrm{FPR}})/'
+               '\\hat\\kappa$。最后两列为「$r_{AI}>0.64$ 即拒绝校正」的触发率——'
+               '危险区为 $\\pi\\ge0.9$、可用区为 $\\pi\\le0.6$，各 %d 次独立抽样。'
+               % e39['reps'])
+    return tb
+
+
 BUILDERS = {'8': t8, '9': t9, '10': t10, '11': t11, '12': t12, '13': t13, '14': t14,
-            '15': t15, '17': t17, '18': t18, '21': t21,
+            '15': t15, '17': t17, '18': t18, '21': t21, 'S11': tS11,
             '26': t26, '27': t27, '28': t28, '19': t19, '20': t20,
             '22': t22, '24': t24, '16': t16, '23': t23, '25': t25}
 
@@ -703,9 +770,11 @@ def main():
     args = ap.parse_args()
 
     keys = [k for k in BUILDERS if (not args.only or k in args.only.split(','))]
+    # 数字键按数值排，补充材料键（S*）排在最后
+    keys.sort(key=lambda k: (k[0] != 'S', int(k) if k.isdigit() else int(k[1:])))
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
-    for k in sorted(keys, key=int):
+    for k in keys:
         fn = BUILDERS[k]
         try:
             tb = fn(args.ubc) if k in UBC_TABLES else fn()

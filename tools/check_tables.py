@@ -85,6 +85,7 @@ def compare(md_rows, gen_rows, tol, skip_last=0):
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument('--supp', default='', help='补充材料 md；给出时同时体检其中的 S* 表')
     ap.add_argument('--md', default=str(DEFAULT_MD))
     ap.add_argument('--tol', type=float, default=0.0012)
     ap.add_argument('--out', default=str(REPORT))
@@ -115,7 +116,8 @@ def main():
              '',
              '差异即"稿件数字 → 复现数字"的替换清单。', '']
     total_diff = 0
-    for k in sorted(gen, key=int):
+    order = sorted([k for k in gen if k.isdigit()], key=int)
+    for k in order:
         if k not in md:
             lines.append('## 表 %s：稿件中未找到，跳过' % k)
             continue
@@ -124,7 +126,6 @@ def main():
         lines.append(head)
         if d:
             total_diff += len(d)
-            lines.append('')
             lines.append('| 行 | 列 | 稿件值 | 复现值 | 差 |')
             lines.append('|---|---|---|---|---|')
             for i, j, x, y in d[:40]:
@@ -145,6 +146,34 @@ def main():
                 ' → 最接近：**%s**' % best)
         lines.append('')
 
+    # 补充材料中的 S* 表（正文之外，另行体检）
+    if args.supp and os.path.exists(args.supp):
+        smd = parse_md_tables(args.supp)
+        lines.append('---')
+        lines.append('')
+        lines.append('## 补充材料：%s' % os.path.relpath(args.supp, ROOT.parent))
+        # 生成器里仍以 19–28 为键，补充材料中改标为 S1–S10；S11 为新表，键名相同
+        pairs = []
+        for k in gen:
+            if k.isdigit() and 19 <= int(k) <= 28:
+                pairs.append(('S%d' % (int(k) - 18), k))
+            elif not k.isdigit():
+                pairs.append((k, k))
+        for tag, gk in sorted(pairs, key=lambda x: int(x[0][1:])):
+            k = tag
+            if k not in smd:
+                lines.append('')
+                lines.append('## 表 %s：补充材料中未找到' % k)
+                continue
+            d = compare(smd[k], gen[gk].rows, args.tol)
+            lines.append('')
+            lines.append('## 表 %s：%s' % (k, '一致' if not d else '存在 %d 处差异' % len(d)))
+            if d:
+                total_diff += len(d)
+                for i, j, x, y in d[:20]:
+                    label = smd[k][i][0] if i < len(smd[k]) else ''
+                    lines.append('| %s | %d | %s | %s |' % (label, j, x, y))
+
     if total_diff == 0:
         lines.append('全部受检表格的数字与 results/*.json 一致。')
     else:
@@ -153,7 +182,7 @@ def main():
         lines.extend(['', '## 替换清单在稿件中的出现位置', ''])
         raw = io.open(args.md, encoding='utf-8').read().split('\n')
         seen = set()
-        for k in sorted(gen, key=int):
+        for k in sorted([k for k in gen if k.isdigit()], key=int):
             if k not in md:
                 continue
             for i, j, x, y in compare(md[k], gen[k].rows, args.tol, SKIP_LAST.get(k, 0)):

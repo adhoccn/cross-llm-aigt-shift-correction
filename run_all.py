@@ -40,6 +40,7 @@ PLAN = [
     ('E36_fpr_metrics.py', '误报约束下的工作点（TPR@FPR / FPR@z=0 / ECE）', None, False),
     ('E37_supervised_ceiling.py', '目标域监督上界与恢复率', None, True),
     ('E38_zeroshot_baseline.py', '零样本检测器族同条件对比', 'transformers', True),
+    ('E39_pi_estimator.py', '批次类先验 π 的无标签可观测量与前置拒绝规则', None, False),
     ('E10_reproducibility.py', '可复现性打包', None, False),
 ]
 
